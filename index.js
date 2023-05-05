@@ -6,7 +6,6 @@ const app = express();
 const port = 3000;
 
 const credentials = {
-    email: "real@gmail.com",
     password: "m295"
 }
 
@@ -25,14 +24,10 @@ app.use(session({
     cookie: {} //<-- Zeile von den Unterichtsunterlagen 
 }));
 
-// Diese Funktion habe ich mit Ben (https://github.com/BWizard06) erstellt
+// Diese Funktion habe ich mit Ben Brändle(https://github.com/BWizard06) erstellt
 function authenticate(request, response, next){
     request.session.email ? next() : response.status(403).json({error: "Nicht eingeloggt!"});
 }
-
-// https://help.xmatters.com/ondemand/trial/valid_email_format.htm#:~:text=A%20valid%20email%20address%20consists,com"%20is%20the%20email%20domain.
-// Dieser Link habe ich benutzt, um zu definieren, was eine valide & invalide E-Mail ist
-
 
 app.use('/tasks', authenticate, tasksrouter);
 
@@ -42,7 +37,12 @@ app.get('/*', (request, response) => {
 
 app.post('/login', (request, response) =>{
     const {email, password} = request.body;
-    if(password === credentials.password && email === credentials.email){
+    // https://help.xmatters.com/ondemand/trial/valid_email_format.htm#:~:text=A%20valid%20email%20address%20consists,com"%20is%20the%20email%20domain.
+    // ^^Dieser Link habe ich benutzt, um zu definieren, was eine valide & invalide E-Mail ist^^
+    // Diese Website habe ich genutzt, um Regex zu verstehen https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet
+    // Des weiteren hat mir Robin Trachsel (https://github.com/DoctorProgrammer) die match()-Methode erklärt & gezeigt, wie ich es mit
+    // dem Regex kombinieren muss
+    if(password === credentials.password && email.match(/[A-Za-z0-9._%+-]\.[a-z]{2,}/)){ 
         request.session.email = email;
         return response.status(200).json({email: request.session.email});
     }
