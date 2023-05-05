@@ -81,7 +81,7 @@ router.get('/:id', (request, response) => {
             break;
         }
     }
-    foundtask ? response.status(200).json({foundtask}) : response.status(404);
+    foundtask ? response.status(200).json({foundtask}) : response.status(404).json({error: "Nicht Gefunden"});
 });
 
 // Endpoint um eine neue Task zu erstellen & zu den anderen hinzufügen
@@ -131,7 +131,7 @@ router.delete('/:id', (request, response) => {
     if (foundtask){
         const index = tasks.indexOf(foundtask);
         tasks.splice(index, 1);
-        response.status(202).json({message: "Task gelöscht"})
+        response.status(202).json({foundtask})
     }else{
         response.status(404)    
     }
