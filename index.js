@@ -48,9 +48,15 @@ app.get('/verify', (request, response) => {
     request.session.email ? response.status(200).json({email: request.session.email}) : response.status(401).json({error: "Nicht eingeloggt!"})
 })
 
+// Ich hatte mühe, das logout umzusetzen
+// bei der Suche nach einer Lösung habe ich
+// https://www.tabnine.com/code/javascript/functions/express-session/Session/destroy
+// gefunden & benutzt.
 app.delete('/logout', (request, response) => {
     if (request.session.email){
-        request.destroy(session.email)
+        request.session.destroy();
+        response.clearCookie();
+        return response.json({message: "amk"});
         return response.status(204)
     }
     response.status(401)
