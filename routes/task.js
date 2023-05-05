@@ -2,7 +2,7 @@ import express, { request, response } from "express";
 
 const router = express.Router();
 
-// List of tasks to test endpoints
+// Test-Daten
 const tasks = [
     {
         id: 1,
@@ -18,12 +18,12 @@ const tasks = [
     },
 ];
 
-// Endpoint to get all tasks
+// Endpoint um alle Tasks anzuzeigen
 router.get('/', (request, response) => {
-    response.status(200).send(tasks);
+    response.status(200).json({tasks});
 });
 
-// Endpoint to search a task with an id
+// Endpoint um ein Tasks mittels Id zu suchen
 router.get('/:id', (request, response) => {
     const id = request.params.id;
     let foundtask;
@@ -33,20 +33,20 @@ router.get('/:id', (request, response) => {
             break;
         }
     }
-    foundtask ? response.status(200).send(foundtask) : response.status(404).send("Task existiert nicht");
+    foundtask ? response.status(200).json({foundtask}) : response.status(404).json({error: "Task existiert nicht"});
 });
 
-// Endpoint to create a new task and add it in task-list
+// Endpoint um eine neue Task zu erstellen & zu den anderen hinzufügen
 router.post('/', (request, response) => {
     let newtask = {};
     for (const key in request.body){
         newtask[key] = request.body[key];
     }
     tasks.push(newtask);
-    response.status(201).send(newtask);
+    response.status(201).json({newtask});
 });
 
-// Endpoint to change a task with an id
+// Endpoint um eine bestehende Task zu ändern
 router.put('/:id', (request, response) => {
     const id = request.params.id;
     let foundtask;
@@ -62,13 +62,13 @@ router.put('/:id', (request, response) => {
         for (const key in request.body){
             updatedtask[key] = request.body[key];
         }
-        response.status(201).send(updatedtask);
+        response.status(201).json({updatedtask});
     }else{
-        response.status(404).send("Task nicht gefunden")
+        response.status(404).json({error: "Task nicht gefunden"})
     }
 });
 
-// Endpoint to delete a task
+// Endpoint um eine Task zu löschen
 router.delete('/:id', (request, response) => {
     const id = request.params.id;
     let foundtask;
@@ -81,9 +81,9 @@ router.delete('/:id', (request, response) => {
     if (foundtask){
         const index = tasks.indexOf(foundtask);
         tasks.splice(index, 1);
-        response.status(204).send("Task gelöscht")
+        response.status(204).json({message: "Task gelöscht"})
     }else{
-        response.status(404).send("task nicht gefunden")
+        response.status(404).json({error: "task nicht gefunden"})
     }
 });
 
