@@ -27,7 +27,7 @@ app.use(session({
 
 // Diese Funktion habe ich mit Ben (https://github.com/BWizard06) erstellt
 function authenticate(request, response, next){
-    request.session.email ? next() : response.status(401).json({error: "Nicht eingeloggt!"});
+    request.session.email ? next() : response.status(403).json({error: "Nicht eingeloggt!"});
 }
 
 app.use('/tasks', authenticate, tasksrouter);
