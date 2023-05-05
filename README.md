@@ -13,4 +13,4 @@
 **Framework**: Express.js
 
 ## Endpoints
-Dokumenation der APi Endpoint findet man in der Datei API.md
+Dokumenation der API Endpoint findet man in der Datei API.md
