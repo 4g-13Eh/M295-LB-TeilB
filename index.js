@@ -69,7 +69,7 @@ app.delete('/logout', (request, response) => {
         response.clearCookie();
         return response.status(204).json({message: "amk"});   
     }
-    response.status(401)
+    return response.status(401)
 })
 
 app.listen(port, () => {
