@@ -56,8 +56,7 @@ app.delete('/logout', (request, response) => {
     if (request.session.email){
         request.session.destroy();
         response.clearCookie();
-        return response.json({message: "amk"});
-        return response.status(204)
+        return response.status(204).json({message: "amk"});   
     }
     response.status(401)
 })
