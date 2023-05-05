@@ -30,14 +30,18 @@ function authenticate(request, response, next){
     request.session.email ? next() : response.status(403).json({error: "Nicht eingeloggt!"});
 }
 
+// https://help.xmatters.com/ondemand/trial/valid_email_format.htm#:~:text=A%20valid%20email%20address%20consists,com"%20is%20the%20email%20domain.
+// Dieser Link habe ich benutzt, um zu definieren, was eine valide & invalide E-Mail ist
+
+
 app.use('/tasks', authenticate, tasksrouter);
 
 app.get('/*', (request, response) => {
-    
+    response.status(404);
 })
 
 app.post('/login', (request, response) =>{
-    const { email, password } = request.body;
+    const {email, password} = request.body;
     if(password === credentials.password && email === credentials.email){
         request.session.email = email;
         return response.status(200).json({email: request.session.email});
