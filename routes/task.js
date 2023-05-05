@@ -81,9 +81,9 @@ router.delete('/:id', (request, response) => {
     if (foundtask){
         const index = tasks.indexOf(foundtask);
         tasks.splice(index, 1);
-        response.status(204).json({message: "Task gelöscht"})
+        response.status(202).json({message: "Task gelöscht"})
     }else{
-        response.status(404).json({error: "task nicht gefunden"})
+        response.status(404).json({error: "Task nicht gefunden"})
     }
 });
 
