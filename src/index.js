@@ -54,9 +54,9 @@ app.post('/login', (request, response) =>{
 
 app.get('/verify', (request, response) => {
     if (request.session.email){
-        return response.status(200).json({email: request.session.email})
+        return response.status(200).json({email: request.session.email});
     }
-    return response.status(401).json({error: "Nicht eingeloggt!"})
+    return response.status(401).json({error: "Nicht eingeloggt!"});
 })
 
 // Ich hatte mühe, das logout umzusetzen
