@@ -32,6 +32,10 @@ function authenticate(request, response, next){
 
 app.use('/tasks', authenticate, tasksrouter);
 
+app.get('/*', (request, response) => {
+    
+})
+
 app.post('/login', (request, response) =>{
     const { email, password } = request.body;
     if(password === credentials.password && email === credentials.email){
@@ -45,7 +49,10 @@ app.post('/login', (request, response) =>{
 // und von den Unterrichtsunterlagen geprüft
 
 app.get('/verify', (request, response) => {
-    request.session.email ? response.status(200).json({email: request.session.email}) : response.status(401).json({error: "Nicht eingeloggt!"})
+    if (request.session.email){
+        return response.status(200).json({email: request.session.email})
+    }
+    return response.status(401).json({error: "Nicht eingeloggt!"})
 })
 
 // Ich hatte mühe, das logout umzusetzen
