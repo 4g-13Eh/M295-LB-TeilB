@@ -8,7 +8,7 @@
 
 **Language**: JavaScript
 
-**Runtime**: Node.js
+**Runtime**: Node.js v20.0.0
 
 **Framework**: Express.js
 
