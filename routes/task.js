@@ -133,7 +133,7 @@ router.delete('/:id', (request, response) => {
         tasks.splice(index, 1);
         response.status(202).json({foundtask})
     }else{
-        response.status(404)    
+        response.status(404).json({error: "Task nicht gefunden"})    
     }
 });
 
